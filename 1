@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static class Film {
+        private String judul;
+        private String genre;
+        private int harga;
+
+        public Film(String judul, String genre, int harga) {
+            this.judul = judul;
+            this.genre = genre;
+            this.harga = harga;
+        }
+
+        public String getJudul() {
+            return judul;
+        }
+
+        public String getGenre() {
+            return genre;
+        }
+
+        public int getHarga() {
+            return harga;
+        }
+    }
+
+    public static class Pemesanan {
+        private Film film;
+        private int jumlahTiket;
+        private String namaPemesan;
+
+        public Pemesanan(Film film, int jumlahTiket, String namaPemesan) {
+            this.film = film;
+            this.jumlahTiket = jumlahTiket;
+            this.namaPemesan = namaPemesan;
+        }
+
+        public int hitungTotalHarga() {
+            return film.getHarga() * jumlahTiket;
+        }
+
+        public void cetakTiket() {
+            System.out.println("Detail Pemesanan:");
+            System.out.println("Judul Film: " + film.getJudul());
+            System.out.println("Genre: " + film.getGenre());
+            System.out.println("Jumlah Tiket: " + jumlahTiket);
+            System.out.println("Total Harga: " + hitungTotalHarga());
+            System.out.println("Nama Pemesan: " + namaPemesan);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        // Daftar film yang tersedia
+        Film film1 = new Film("Avengers: Endgame", "Action", 50000);
+        Film film2 = new Film("Toy Story 4", "Animation", 40000);
+
+        System.out.println("Selamat datang di Aplikasi Pemesanan Tiket Bioskop Online!");
+
+        // Meminta input dari pengguna
+        System.out.print("Masukkan judul film yang ingin dipesan: ");
+        String judulFilm = input.nextLine();
+        System.out.print("Masukkan jumlah tiket yang ingin dipesan: ");
+        int jumlahTiket = input.nextInt();
+        input.nextLine(); // Membersihkan newline dari input sebelumnya
+        System.out.print("Masukkan nama pemesan: ");
+        String namaPemesan = input.nextLine();
+
+        // Mencari film yang sesuai dengan judul yang dimasukkan pengguna
+        Film filmDipesan = null;
+        if (judulFilm.equalsIgnoreCase(film1.getJudul())) {
+            filmDipesan = film1;
+        } else if (judulFilm.equalsIgnoreCase(film2.getJudul())) {
+            filmDipesan = film2;
+        } else {
+            System.out.println("Film tidak ditemukan.");
+            input.close();
+            return;
+        }
+
+        // Membuat objek pemesanan
+        Pemesanan pemesanan = new Pemesanan(filmDipesan, jumlahTiket, namaPemesan);
+
+        // Menampilkan tiket
+        pemesanan.cetakTiket();
+
+        input.close();
+    }
+}
